@@ -1,7 +1,9 @@
 🚨 AWS Cloud SOC (Security Operations Center)
+
 A hands-on project to simulate a "Cloud-based Security Operations Center (SOC)" using AWS services. This project demonstrates how to monitor, detect, and respond to security events in a cloud environment.
 
  📌 Overview
+ 
 This project focuses on building a "real-world SOC environment on AWS", leveraging native security services to:
 
  Monitor cloud activity
@@ -21,7 +23,9 @@ In modern cloud environments, a SOC plays a critical role in identifying threats
  ⚡ Real-time Alerts & Response Simulation
 
  🏗️ Architecture (Concept)
+ 
 User Activity → AWS Services → Logging → Detection → Alerting → Response
+
  Flow:
  AWS resources generate logs (CloudTrail, VPC Flow Logs, etc.)
  Logs are aggregated and analyzed
@@ -29,6 +33,7 @@ User Activity → AWS Services → Logging → Detection → Alerting → Respon
  SOC workflows handle incidents
 
  🛠️ Technologies Used
+ 
  ☁️ **AWS Cloud Services**
 AWS CloudTrail
 AWS CloudWatch
@@ -46,12 +51,14 @@ IAM (Identity & Access Management)
  📜 JSON / YAML configurations
 
 🚀 Getting Started
+
  1️⃣ Clone the Repository
 bash
 git clone https://github.com/Dianger16/AWS-CLOUD-SOC.git
 cd AWS-CLOUD-SOC
 
 2️⃣ Setup AWS Environment
+
  Create an AWS account
  Configure IAM roles and permissions
  Enable logging services:
