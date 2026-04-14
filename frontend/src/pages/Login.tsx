@@ -13,7 +13,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthContext } from '@/context/AuthContext'
 import { createThrottled } from '@/utils/security'
 import { Loader } from '@/components/Loader'
-import Dither from '@/components/Dither/Dither'
+// @ts-ignore
+import SoftAurora from '@/components/SoftAurora/SoftAurora'
 
 export function Login() {
   const { login, isLoading, error, clearError } = useAuthContext()
@@ -49,17 +50,15 @@ export function Login() {
 
   return (
     <div className="min-h-screen bg-bg-primary flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Dither */}
-      <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
-        <Dither
-          waveColor={[0.02, 0.1, 0.15]}
-          disableAnimation={false}
+      {/* Background Aurora */}
+      <div className="absolute inset-0 z-0">
+        <SoftAurora
+          speed={0.6}
+          scale={1.5}
+          brightness={1}
+          color1="#0a2a3a" // Adjusted for deep SOC look
+          color2="#00f2ff" // Cyan glow
           enableMouseInteraction
-          mouseRadius={0.4}
-          colorNum={4}
-          waveAmplitude={0.2}
-          waveFrequency={2.5}
-          waveSpeed={0.03}
         />
       </div>
 
