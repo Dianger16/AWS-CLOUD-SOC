@@ -1,0 +1,40 @@
+# AI Cloud Security Guardian — Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Web framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+
+# Database
+sqlalchemy==2.0.35
+psycopg2-binary
+alembic==1.13.3
+
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+
+# Settings / env management
+pydantic-settings==2.5.2
+pydantic==2.9.2
+python-dotenv==1.0.1
+
+# AWS SDK
+boto3==1.35.30
+botocore==1.35.30
+
+# Machine learning
+scikit-learn==1.5.2
+numpy==1.26.4
+joblib==1.4.2
+
+# HTTP client (for LLM advisor)
+httpx==0.27.2
+
+# Task queue (optional — remove if not using Celery)
+celery==5.4.0
+redis==5.1.0
+
+# Logging / utilities
+python-json-logger==2.0.7

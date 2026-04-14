@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-primary: #0a0a0c;
+  --bg-secondary: #121216;
+  --bg-card: #16161c;
+  --bg-elevated: #1e1e26;
+  --bg-border: #2a2a34;
+  
+  --text-primary: #e2e2e6;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  
+  --cyan-glow: #00f2ff;
+  --cyan-dim: #008891;
+  --cyan-muted: #004d52;
+  
+  --severity-critical: #ff3e3e;
+  --severity-high: #ff8c3e;
+  --severity-medium: #ffcc3e;
+  --severity-low: #3effac;
+  
+  --scan-lines: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+@layer base {
+  body {
+    @apply bg-bg-primary text-text-primary font-sans antialiased;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-cyan-dim hover:bg-cyan-glow text-bg-primary font-mono text-xs font-bold px-4 py-2 rounded transition-all duration-200 uppercase tracking-wider;
+  }
+  
+  .card {
+    @apply bg-bg-card border border-bg-border rounded-xl shadow-xl overflow-hidden;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}

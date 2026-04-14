@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/shield.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Cloud Security Guardian — Cloud Security Monitoring Platform" />
+
+    <!-- Security: prevent clickjacking via meta (real X-Frame-Options should be set server-side) -->
+    <!-- Security: basic XSS protection hint for older browsers -->
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <!-- Security: Content Security Policy - adjust as needed -->
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; 
+               script-src 'self'; 
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+               font-src 'self' https://fonts.gstatic.com;
+               connect-src 'self' http://localhost:8000;
+               img-src 'self' data:;" />
+
+    <!-- IBM Plex Mono + Sans for SOC terminal aesthetic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+    <title>AI Cloud Security Guardian</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

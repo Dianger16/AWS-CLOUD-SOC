@@ -1,0 +1,34 @@
+# --------------
+# BACKEND IGNORES
+# --------------
+# Python/FastAPI
+backend/venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/.pytest_cache/
+
+# Databases
+backend/*.db
+backend/*.db-shm
+backend/*.db-wal
+backend/*.sqlite3
+
+# Environment Variables
+backend/.env
+
+# ---------------
+# FRONTEND IGNORES
+# ---------------
+# Node/React
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.npm/
+
+# Environment Variables
+frontend/.env
+frontend/.env.*
+
+# OS generated files
+.DS_Store
+Thumbs.db
