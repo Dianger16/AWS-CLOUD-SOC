@@ -26,9 +26,13 @@ export function PrivateRoute() {
 
   return (
     <div className="flex h-screen bg-bg-primary overflow-hidden">
-      <Sidebar />
+      <div className="relative z-50">
+        <Sidebar />
+      </div>
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
-        <Navbar />
+        <div className="relative z-40">
+          <Navbar />
+        </div>
         <main className="flex-1 overflow-y-auto relative">
           {/* Background effects */}
           <div className="fixed inset-0 pointer-events-none z-0 opacity-15">

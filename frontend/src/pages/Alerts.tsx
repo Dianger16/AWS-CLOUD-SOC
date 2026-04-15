@@ -9,6 +9,36 @@ import { AlertTable } from '@/components/AlertTable'
 import { TableSkeleton } from '@/components/Loader'
 import type { Severity } from '@/types'
 import clsx from 'clsx'
+import { CheckCircle2Icon, InfoIcon } from "lucide-react"
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
+
+export function AlertDemo() {
+  return (
+    <div className="grid w-full max-w-md items-start gap-4 mb-6">
+      <Alert>
+        <CheckCircle2Icon className="h-4 w-4" />
+        <AlertTitle>Payment successful</AlertTitle>
+        <AlertDescription>
+          Your payment of $29.99 has been processed. A receipt has been sent to
+          your email address.
+        </AlertDescription>
+      </Alert>
+      <Alert>
+        <InfoIcon className="h-4 w-4" />
+        <AlertTitle>New feature available</AlertTitle>
+        <AlertDescription>
+          We&apos;ve added dark mode support. You can enable it in your account
+          settings.
+        </AlertDescription>
+      </Alert>
+    </div>
+  )
+}
+
 
 type SourceFilter = 'all' | 'misconfiguration' | 'log_anomaly' | 'ml'
 
@@ -68,6 +98,9 @@ export function Alerts() {
           </div>
         )}
       </div>
+
+      {/* Alert Component Demo */}
+      <AlertDemo />
 
       {/* Filter bar */}
       <div className="space-y-3">

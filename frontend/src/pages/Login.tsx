@@ -164,22 +164,7 @@ export function Login() {
             </button>
           </form>
 
-          {/* Demo credentials hint */}
-          <div className="mt-5 pt-4 border-t border-bg-border">
-            <div className="font-mono text-[9px] text-text-muted tracking-widest text-center mb-2">
-              DEMO CREDENTIALS
-            </div>
-            <div className="grid grid-cols-2 gap-2 text-center">
-              <div className="bg-bg-secondary border border-bg-border rounded p-2">
-                <div className="font-mono text-[10px] text-text-secondary">admin</div>
-                <div className="font-mono text-[9px] text-text-muted">SOC2027</div>
-              </div>
-              <div className="bg-bg-secondary border border-bg-border rounded p-2">
-                <div className="font-mono text-[10px] text-text-secondary">analyst</div>
-                <div className="font-mono text-[9px] text-text-muted">A2027</div>
-              </div>
-            </div>
-          </div>
+
         </div>
 
         <div className="text-center mt-4">
