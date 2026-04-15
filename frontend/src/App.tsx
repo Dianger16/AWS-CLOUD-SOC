@@ -5,6 +5,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { AuthProvider } from '@/context/AuthContext'
+import { ThemeProvider } from '@/context/ThemeContext'
 import { PrivateRoute } from '@/routes'
 import { Login } from '@/pages/Login'
 import { Dashboard } from '@/pages/Dashboard'
@@ -31,27 +32,29 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
-          <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
+      <ThemeProvider>
+        <AuthProvider>
+          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+            <Routes>
+              {/* Public routes */}
+              <Route path="/login" element={<Login />} />
 
-            {/* Protected routes — wrapped in PrivateRoute */}
-            <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/assets" element={<Assets />} />
-              <Route path="/vulnerabilities" element={<Vulnerabilities />} />
-              <Route path="/alerts" element={<Alerts />} />
-              <Route path="/logs" element={<Logs />} />
-            </Route>
+              {/* Protected routes — wrapped in PrivateRoute */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/assets" element={<Assets />} />
+                <Route path="/vulnerabilities" element={<Vulnerabilities />} />
+                <Route path="/alerts" element={<Alerts />} />
+                <Route path="/logs" element={<Logs />} />
+              </Route>
 
-            {/* Default redirect */}
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
-          </Routes>
-        </BrowserRouter>
-      </AuthProvider>
+              {/* Default redirect */}
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            </Routes>
+          </BrowserRouter>
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   )
 }

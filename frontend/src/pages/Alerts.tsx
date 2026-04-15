@@ -9,30 +9,29 @@ import { AlertTable } from '@/components/AlertTable'
 import { TableSkeleton } from '@/components/Loader'
 import type { Severity } from '@/types'
 import clsx from 'clsx'
-import { CheckCircle2Icon, InfoIcon } from "lucide-react"
+import { AlertTriangle, ShieldAlert, CheckCircle2Icon, InfoIcon } from "lucide-react"
+
 import {
   Alert,
   AlertDescription,
   AlertTitle,
 } from "@/components/ui/alert"
 
-export function AlertDemo() {
+export function SecurityAlertBanner() {
   return (
-    <div className="grid w-full max-w-md items-start gap-4 mb-6">
-      <Alert>
-        <CheckCircle2Icon className="h-4 w-4" />
-        <AlertTitle>Payment successful</AlertTitle>
-        <AlertDescription>
-          Your payment of $29.99 has been processed. A receipt has been sent to
-          your email address.
+    <div className="grid w-full max-w-2xl items-start gap-4 mb-6">
+      <Alert variant="destructive" className="border-severity-critical/50 bg-severity-critical/5">
+        <AlertTriangle className="h-4 w-4 text-severity-critical" />
+        <AlertTitle className="text-severity-critical">Critical Threat Detected</AlertTitle>
+        <AlertDescription className="text-text-secondary">
+          Unauthorized IAM policy changes detected in production environment. Immediate review recommended.
         </AlertDescription>
       </Alert>
-      <Alert>
-        <InfoIcon className="h-4 w-4" />
-        <AlertTitle>New feature available</AlertTitle>
-        <AlertDescription>
-          We&apos;ve added dark mode support. You can enable it in your account
-          settings.
+      <Alert className="border-severity-high/50 bg-severity-high/5">
+        <ShieldAlert className="h-4 w-4 text-severity-high" />
+        <AlertTitle className="text-severity-high">High Severity Alert</AlertTitle>
+        <AlertDescription className="text-text-secondary">
+          Suspicious S3 bucket access pattern detected from unknown IP range (45.123.x.x).
         </AlertDescription>
       </Alert>
     </div>
@@ -99,8 +98,9 @@ export function Alerts() {
         )}
       </div>
 
-      {/* Alert Component Demo */}
-      <AlertDemo />
+      {/* Alert Highlights */}
+      <SecurityAlertBanner />
+
 
       {/* Filter bar */}
       <div className="space-y-3">

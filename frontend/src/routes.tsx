@@ -34,8 +34,8 @@ export function PrivateRoute() {
           <Navbar />
         </div>
         <main className="flex-1 overflow-y-auto relative">
-          {/* Background effects */}
-          <div className="fixed inset-0 pointer-events-none z-0 opacity-15">
+          {/* Background effects - only visible in dark mode for that SOC look */}
+          <div className="fixed inset-0 pointer-events-none z-0 opacity-15 dark:opacity-15 opacity-0 transition-opacity duration-500">
             <Dither
               waveColor={[0.02, 0.06, 0.1]}
               disableAnimation={false}
@@ -47,7 +47,7 @@ export function PrivateRoute() {
               waveSpeed={0.03}
             />
           </div>
-          <div className="fixed inset-0 pointer-events-none bg-scan-lines opacity-20 z-1" />
+          <div className="fixed inset-0 pointer-events-none bg-scan-lines opacity-20 dark:opacity-20 opacity-0 z-1 transition-opacity duration-500" />
           
           <div className="relative z-10">
             <Outlet />

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
@@ -8,32 +9,31 @@ export default {
         sans: ['"IBM Plex Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
-        // SOC terminal palette
         bg: {
-          primary: '#0a0c0f',
-          secondary: '#0f1318',
-          card: '#131820',
-          elevated: '#1a2030',
-          border: '#1e2a3a',
+          primary: 'var(--bg-primary)',
+          secondary: 'var(--bg-secondary)',
+          card: 'var(--bg-card)',
+          elevated: 'var(--bg-elevated)',
+          border: 'var(--bg-border)',
         },
         cyan: {
-          glow: '#00d4ff',
-          bright: '#00b8e6',
-          dim: '#0088aa',
-          muted: '#004466',
+          glow: 'var(--cyan-glow)',
+          bright: 'var(--cyan-dim)',
+          dim: 'var(--cyan-dim)',
+          muted: 'var(--cyan-muted)',
         },
         severity: {
-          critical: '#ff2d55',
-          high: '#ff6b35',
-          medium: '#ffd60a',
-          low: '#34c759',
+          critical: 'var(--severity-critical)',
+          high: 'var(--severity-high)',
+          medium: 'var(--severity-medium)',
+          low: 'var(--severity-low)',
           info: '#636e7b',
         },
         text: {
-          primary: '#e8eef5',
-          secondary: '#8899aa',
-          muted: '#445566',
-          accent: '#00d4ff',
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          muted: 'var(--text-muted)',
+          accent: 'var(--cyan-glow)',
         },
       },
       backgroundImage: {

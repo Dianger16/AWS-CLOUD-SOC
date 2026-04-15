@@ -3,6 +3,7 @@
  */
 
 import { useLocation } from 'react-router-dom'
+import { ThemeToggle } from '@/components/ThemeToggle'
 
 const pageTitles: Record<string, { title: string; subtitle: string }> = {
   '/dashboard': { title: 'OPERATIONS CENTER', subtitle: 'Real-time cloud security overview' },
@@ -40,6 +41,8 @@ export function Navbar() {
           <span className="text-cyan-dim">{now.toLocaleTimeString('en-US', { hour12: false })}</span>
           {' UTC'}
         </div>
+        
+        <ThemeToggle />
 
         {/* Status indicators */}
         <div className="flex items-center gap-3">

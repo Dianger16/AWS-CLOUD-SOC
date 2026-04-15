@@ -3,33 +3,48 @@
 @tailwind utilities;
 
 :root {
-  --bg-primary: #0a0a0c;
-  --bg-secondary: #121216;
-  --bg-card: #16161c;
-  --bg-elevated: #1e1e26;
-  --bg-border: #2a2a34;
+  --bg-primary: #0a0c0f;
+  --bg-secondary: #0f1318;
+  --bg-card: #131820;
+  --bg-elevated: #1a2030;
+  --bg-border: #1e2a3a;
   
-  --text-primary: #e2e2e6;
-  --text-secondary: #a1a1aa;
-  --text-muted: #71717a;
+  --text-primary: #e8eef5;
+  --text-secondary: #8899aa;
+  --text-muted: #445566;
   
-  --cyan-glow: #00f2ff;
-  --cyan-dim: #008891;
-  --cyan-muted: #004d52;
+  --cyan-glow: #00d4ff;
+  --cyan-dim: #0088aa;
+  --cyan-muted: #004466;
   
-  --severity-critical: #ff3e3e;
-  --severity-high: #ff8c3e;
-  --severity-medium: #ffcc3e;
-  --severity-low: #3effac;
-  
-  --scan-lines: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.1),
-    rgba(0, 0, 0, 0.1) 1px,
-    transparent 1px,
-    transparent 2px
-  );
+  --severity-critical: #ff2d55;
+  --severity-high: #ff6b35;
+  --severity-medium: #ffd60a;
+  --severity-low: #34c759;
 }
+
+.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-elevated: #e2e8f0;
+  --bg-border: #3b82f6;
+  
+  --text-primary: #1e3a8a;
+  --text-secondary: #1e40af;
+  --text-muted: #3b82f6;
+  
+  --cyan-glow: #0ea5e9;
+  --cyan-dim: #0284c7;
+  --cyan-muted: #0369a1;
+  
+  --severity-critical: #e11d48;
+  --severity-high: #f97316;
+  --severity-medium: #eab308;
+  --severity-low: #10b981;
+}
+
+
 
 @layer base {
   body {
