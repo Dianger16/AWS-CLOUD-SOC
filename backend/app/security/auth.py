@@ -7,9 +7,18 @@ from pydantic import BaseModel
 from app.core.config import settings
 from app.utils.logger import get_logger
 
+from passlib.context import CryptContext
+
 logger = get_logger(__name__)
 
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
+
+def verify_password(plain_password, hashed_password):
+    return pwd_context.verify(plain_password, hashed_password)
+
+def get_password_hash(password):
+    return pwd_context.hash(password)
 
 class TokenData(BaseModel):
     username: Optional[str] = None

@@ -96,6 +96,11 @@ export async function login(credentials: LoginCredentials): Promise<AuthToken> {
   return response.data
 }
 
+export async function register(credentials: LoginCredentials): Promise<{ username: string; message: string }> {
+  const response = await api.post('/auth/register', credentials)
+  return response.data
+}
+
 // ── AWS Credential types ──────────────────────────────────────────────────────
 
 export interface AWSCredentials {

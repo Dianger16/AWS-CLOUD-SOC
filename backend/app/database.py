@@ -56,7 +56,7 @@ def init_db():
     """Create all tables if they don't exist."""
     try:
         # Must import all models so SQLAlchemy knows about them
-        from app.models import asset_model, vulnerability_model, alert_model  # noqa: F401
+        from app.models import asset_model, vulnerability_model, alert_model, user_model  # noqa: F401
         Base.metadata.create_all(bind=engine)
         logger.info(f"Database ready — {settings.DATABASE_URL.split('://')[0]}")
     except Exception as e:
