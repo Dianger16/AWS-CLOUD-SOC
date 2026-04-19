@@ -88,7 +88,7 @@ export function createThrottled<T extends (...args: unknown[]) => unknown>(
   fn: T,
   waitMs: number
 ): T {
-  return throttle(fn, waitMs, { leading: true, trailing: false }) as T
+  return throttle(fn, waitMs, { leading: true, trailing: false }) as unknown as T
 }
 
 // ── CSRF Token ───────────────────────────────────────────────────────────────

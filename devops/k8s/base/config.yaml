@@ -1,0 +1,25 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudsoc-config
+  namespace: cloudsoc
+data:
+  APP_NAME: "AI-cloud-security-operation-center"
+  DEBUG: "false"
+  AWS_DEFAULT_REGION: "us-east-1"
+  ACCESS_TOKEN_EXPIRE_MINUTES: "120"
+  ALGORITHM: "HS256"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudsoc-secrets
+  namespace: cloudsoc
+type: Opaque
+stringData:
+  SECRET_KEY: "cloudsoc-k8s-secret-key-change-this-now"
+  DB_PASSWORD: "cloudsoc_k8s_pass"
+  DATABASE_URL: "postgresql://cloudsoc:cloudsoc_k8s_pass@postgres-service:5432/cloud_cloudsoc"
+  OPENAI_API_KEY: ""

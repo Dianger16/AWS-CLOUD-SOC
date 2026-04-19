@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cloudsoc
+  labels:
+    app.kubernetes.io/name: ai-cloud-security-operation-center
+    environment: production

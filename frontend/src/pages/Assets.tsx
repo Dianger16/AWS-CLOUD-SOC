@@ -4,10 +4,17 @@
 
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { runAwsScan } from '@/services/api'
+import { runAwsScan, ScanRequest } from '@/services/api'
 import { AssetCard } from '@/components/AssetCard'
 import { PageLoader } from '@/components/Loader'
+import type { ScanSummary } from '@/types'
 import clsx from 'clsx'
+
+// Default scan request — all resources enabled
+const DEFAULT_REQUEST: ScanRequest = {
+  credentials: { access_key_id: '', secret_access_key: '', region: 'us-east-1' },
+  scan_ec2: true, scan_s3: true, scan_iam: true, scan_security_groups: true,
+}
 
 type AssetFilter = 'all' | 'ec2' | 's3' | 'iam' | 'sg'
 
@@ -15,12 +22,13 @@ export function Assets() {
   const [filter, setFilter] = useState<AssetFilter>('all')
   const [search, setSearch] = useState('')
 
-  const { data, isLoading, error, refetch, isFetching } = useQuery({
+  const { data: rawData, isLoading, error, refetch, isFetching } = useQuery<ScanSummary>({
     queryKey: ['scan-summary'],
-    queryFn: runAwsScan,
+    queryFn: () => runAwsScan(DEFAULT_REQUEST),
     enabled: false,  // Only fetch when user triggers
     staleTime: 60_000,
   })
+  const data = rawData as ScanSummary | undefined
 
   const filters: { key: AssetFilter; label: string }[] = [
     { key: 'all', label: 'ALL ASSETS' },
@@ -108,8 +116,8 @@ export function Assets() {
               <div className="bg-bg-card border border-bg-border rounded-lg p-4 col-span-2">
                 <div className="font-mono text-[10px] text-text-muted tracking-widest mb-2">DETAILS</div>
                 <div className="font-mono text-xs text-text-secondary">
-                  {data.summary.ec2_instances} instance{data.summary.ec2_instances !== 1 ? 's' : ''} discovered in {import.meta.env.VITE_API_BASE_URL ? 'connected' : 'default'} region.
-                  Risk scoring applied. Check Vulnerabilities tab for misconfigurations.
+                  {data.summary.ec2_instances} instance{data.summary.ec2_instances !== 1 ? 's' : ''} discovered. Risk scoring applied. Check Vulnerabilities tab for misconfigurations.
+ ls
                 </div>
               </div>
             </Section>

@@ -1,0 +1,72 @@
+services:
+
+  db:
+    image: postgres:15-alpine
+    container_name: guardian-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cloud_guardian
+      POSTGRES_USER: guardian
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-guardian_dev_pass}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U guardian -d cloud_guardian"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - guardian-net
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile.backend
+    container_name: guardian-backend
+    restart: unless-stopped
+    environment:
+      SECRET_KEY: ${SECRET_KEY:-guardian-docker-secret-change-in-prod}
+      DEBUG: "false"
+      ACCESS_TOKEN_EXPIRE_MINUTES: "120"
+      DATABASE_URL: postgresql://guardian:${DB_PASSWORD:-guardian_dev_pass}@db:5432/cloud_guardian
+      AWS_ACCESS_KEY_ID: ""
+      AWS_SECRET_ACCESS_KEY: ""
+      AWS_DEFAULT_REGION: us-east-1
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/auth/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - guardian-net
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_BASE_URL: /api
+    container_name: guardian-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    networks:
+      - guardian-net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  guardian-net:
+    driver: bridge

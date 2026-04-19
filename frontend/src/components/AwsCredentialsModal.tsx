@@ -42,6 +42,7 @@ export function AwsCredentialsModal({ onClose, onScanComplete }: Props) {
   const [showSecret, setShowSecret] = useState(false)
   const [showToken, setShowToken] = useState(false)
   const [step, setStep] = useState<Step>('credentials')
+  const [isScanning, setIsScanning] = useState(false)
   const [identity, setIdentity] = useState<{ account_id: string; user_arn: string } | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [scanOptions, setScanOptions] = useState({
@@ -80,7 +81,7 @@ export function AwsCredentialsModal({ onClose, onScanComplete }: Props) {
   }
 
   const handleScan = async () => {
-    setStep('scanning')
+    setIsScanning(true)
     setError(null)
     try {
       const request: ScanRequest = {
@@ -99,6 +100,8 @@ export function AwsCredentialsModal({ onClose, onScanComplete }: Props) {
     } catch (err) {
       setError((err as { message?: string }).message ?? 'Scan failed.')
       setStep('error')
+    } finally {
+      setIsScanning(false)
     }
   }
 
@@ -287,10 +290,10 @@ export function AwsCredentialsModal({ onClose, onScanComplete }: Props) {
           ) : (
             <button
               onClick={handleScan}
-              disabled={step === 'scanning'}
+              disabled={isScanning}
               className="font-mono text-[10px] tracking-widest px-5 py-2 border border-severity-low/50 text-severity-low hover:border-severity-low hover:shadow-md rounded transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
             >
-              {step === 'scanning' ? <><Loader size="sm" label="" /> SCANNING AWS...</> : '▶ START SCAN'}
+              {isScanning ? <><Loader size="sm" label="" /> SCANNING AWS...</> : '▶ START SCAN'}
             </button>
           )}
         </div>
