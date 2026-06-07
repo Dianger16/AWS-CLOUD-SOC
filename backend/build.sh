@@ -1,37 +1,36 @@
 #!/bin/bash
-# build.sh — Render build script
-# Installs system dependencies then Python packages
-
 set -e
 
-echo "=== Installing Python dependencies ==="
+echo "Python version: $(python --version)"
+echo "Pip version: $(pip --version)"
 
-# Upgrade pip first — old pip causes metadata generation failures
+# Upgrade pip and build tools first
 pip install --upgrade pip setuptools wheel
 
-# Install packages one group at a time to isolate any failures
-echo "Installing FastAPI..."
-pip install fastapi==0.115.0 uvicorn[standard]==0.30.6 python-multipart==0.0.9
+# Install all packages using pre-built binary wheels only
+# --only-binary :all: prevents any source compilation
+pip install --only-binary :all: \
+    numpy==1.26.4 \
+    pydantic-core==2.23.4
 
-echo "Installing database drivers..."
-pip install sqlalchemy==2.0.35 psycopg2-binary==2.9.9
+# Install everything else normally (these all have wheels for 3.11)
+pip install \
+    fastapi==0.115.0 \
+    "uvicorn[standard]==0.30.6" \
+    python-multipart==0.0.9 \
+    sqlalchemy==2.0.35 \
+    psycopg2-binary==2.9.9 \
+    "python-jose[cryptography]==3.3.0" \
+    "passlib[bcrypt]==1.7.4" \
+    pydantic==2.9.2 \
+    pydantic-settings==2.5.2 \
+    python-dotenv==1.0.1 \
+    boto3==1.35.30 \
+    botocore==1.35.30 \
+    scikit-learn==1.5.2 \
+    joblib==1.4.2 \
+    httpx==0.27.2 \
+    python-json-logger==2.0.7
 
-echo "Installing auth packages..."
-pip install "python-jose[cryptography]==3.3.0" "passlib[bcrypt]==1.7.4"
-
-echo "Installing settings..."
-pip install pydantic==2.9.2 pydantic-settings==2.5.2 python-dotenv==1.0.1
-
-echo "Installing AWS SDK..."
-pip install boto3==1.35.30
-
-echo "Installing ML packages..."
-pip install numpy==1.26.4
-pip install scikit-learn==1.5.2
-pip install joblib==1.4.2
-
-echo "Installing remaining packages..."
-pip install httpx==0.27.2 python-json-logger==2.0.7
-
-echo "=== Build complete ==="
-pip list
+echo "=== All packages installed ==="
+pip list | grep -E "fastapi|pydantic|sqlalchemy|boto3|scikit|numpy"
