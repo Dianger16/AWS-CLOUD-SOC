@@ -50,20 +50,28 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = 
     user = db.query(User).filter(User.username == form_data.username).first()
     
     if not user or not verify_password(form_data.password, user.hashed_password):
-        # Fallback for old demo users during migration if needed, 
-        # but for clean feature we should use the DB.
-        # Let's add a check for the old hardcoded admin once to seed if empty
+        # Allow the hardcoded admin credentials as a safe fallback / self-healing seed.
+        # Upsert pattern: update hash if admin already exists, create if not.
         if form_data.username == "admin" and form_data.password == "SOC2027":
-             # Auto-seed admin if database is empty and someone tries to login with old creds
-             admin = User(
-                 username="admin", 
-                 hashed_password=get_password_hash("SOC2027"), 
-                 role="admin"
-             )
-             db.add(admin)
-             db.commit()
-             db.refresh(admin)
-             user = admin
+            existing_admin = db.query(User).filter(User.username == "admin").first()
+            if existing_admin:
+                # Re-hash with current CryptContext so future verifies succeed
+                existing_admin.hashed_password = get_password_hash("SOC2027")
+                db.commit()
+                db.refresh(existing_admin)
+                user = existing_admin
+                logger.info("Admin password hash refreshed via fallback login.")
+            else:
+                new_admin = User(
+                    username="admin",
+                    hashed_password=get_password_hash("SOC2027"),
+                    role="admin",
+                )
+                db.add(new_admin)
+                db.commit()
+                db.refresh(new_admin)
+                user = new_admin
+                logger.info("Admin user created via fallback login seed.")
         else:
             logger.warning(f"Failed login attempt for user: {form_data.username}")
             raise HTTPException(

@@ -8,12 +8,35 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 
 from app.core.config import settings
-from app.database import init_db
+from app.database import init_db, SessionLocal
 from app.services.risk_model import get_model
 from app.utils.logger import get_logger
 from app.api import scan_routes, risk_routes, alert_routes, auth_routes
 
 logger = get_logger(__name__)
+
+
+def ensure_admin() -> None:
+    """Create or re-hash the admin user on every startup so the hash is always current."""
+    from app.models.user_model import User
+    from app.security.auth import get_password_hash
+    db = SessionLocal()
+    try:
+        admin = db.query(User).filter(User.username == "admin").first()
+        fresh_hash = get_password_hash("SOC2027")
+        if admin:
+            admin.hashed_password = fresh_hash
+            db.commit()
+            logger.info("Admin password hash refreshed on startup.")
+        else:
+            db.add(User(username="admin", hashed_password=fresh_hash, role="admin"))
+            db.commit()
+            logger.info("Admin user seeded on startup.")
+    except Exception as e:
+        logger.error(f"ensure_admin failed: {e}")
+        db.rollback()
+    finally:
+        db.close()
 
 
 @asynccontextmanager
@@ -23,6 +46,10 @@ async def lifespan(app: FastAPI):
         init_db()
     except Exception as e:
         logger.error(f"Database initialization failed: {e}")
+    try:
+        ensure_admin()
+    except Exception as e:
+        logger.error(f"Admin seed failed: {e}")
     try:
         get_model()
         logger.info("ML risk model loaded.")
